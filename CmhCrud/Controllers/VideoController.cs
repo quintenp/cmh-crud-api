@@ -1,17 +1,25 @@
 ﻿using System.Collections.Generic;
+using CmhCrud.Domain.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CmhCrud.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LinkController : ControllerBase
+    public class VideoController : ControllerBase
     {
+        private readonly IVideoService _videoService;
+
+        public VideoController(IVideoService videoService)
+        {
+            _videoService = videoService;
+        }
+
         // GET: api/Link
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { _videoService.TestService(), "value2" };
         }
 
         // GET: api/Link/5
