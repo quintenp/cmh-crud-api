@@ -1,5 +1,7 @@
-﻿using CmhCrud.Domain.Interface;
-using CmhCrud.Domain.Service;
+﻿using CmhCrud.Context;
+using CmhCrud.Entity;
+using CmhCrud.Interface;
+using CmhCrud.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +23,16 @@ namespace CmhCrud
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddScoped<IVideoService, VideoCrudService>();
+            services.AddTransient<IVideoContext, VideoContext>();
+
+            services.Configure<MongoSettings>(
+                options =>
+                {
+                    options.ConnectionString = Configuration.GetSection("MongoDb:ConnectionString").Value;
+                    options.Database = Configuration.GetSection("MongoDb:Database").Value;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

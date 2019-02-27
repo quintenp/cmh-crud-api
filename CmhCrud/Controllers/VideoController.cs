@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CmhCrud.Domain.Interface;
+using CmhCrud.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CmhCrud.Controllers
