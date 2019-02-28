@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using CmhCrud.Entity;
 using CmhCrud.Interface;
+using CmhCrud.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CmhCrud.Controllers
@@ -8,18 +11,17 @@ namespace CmhCrud.Controllers
     [ApiController]
     public class VideoController : ControllerBase
     {
-        private readonly IVideoService _videoService;
+        private readonly IVideoRepository _videoRepository;
 
-        public VideoController(IVideoService videoService)
+        public VideoController(IVideoRepository videoRepository)
         {
-            _videoService = videoService;
+            _videoRepository = videoRepository;
         }
 
-        // GET: api/Link
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { _videoService.TestService(), "value2" };
+            return new ObjectResult(await _videoRepository.GetAllVideos());
         }
 
         // GET: api/Link/5
@@ -31,8 +33,11 @@ namespace CmhCrud.Controllers
 
         // POST: api/Link
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody]Video video)
         {
+            await _videoRepository.Create(video);
+
+            return new OkObjectResult(video);
         }
 
         // PUT: api/Link/5

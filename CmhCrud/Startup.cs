@@ -1,6 +1,7 @@
 ﻿using CmhCrud.Context;
 using CmhCrud.Entity;
 using CmhCrud.Interface;
+using CmhCrud.Repository;
 using CmhCrud.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +26,9 @@ namespace CmhCrud
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<IVideoService, VideoCrudService>();
+
             services.AddTransient<IVideoContext, VideoContext>();
+            services.AddTransient<IVideoRepository, VideoRepository>();
 
             services.Configure<MongoSettings>(
                 options =>
